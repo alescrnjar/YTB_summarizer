@@ -1,15 +1,9 @@
 import streamlit as st
 import os
 
-import langchain
 import langchain.text_splitter 
-from langchain_community.document_loaders import PyPDFLoader
 import langchain_community.vectorstores
-
-from langchain.prompts import PromptTemplate
-from langchain_openai import ChatOpenAI
 from langchain_core.documents import Document
-
 from langchain_community.document_loaders import YoutubeLoader
 
 def get_text_splits_for_pdf_files(pdf_files, chunk_size=1000, chunk_overlap=0):
