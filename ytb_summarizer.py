@@ -1,28 +1,7 @@
 import streamlit as st
 import os
 
-import langchain.text_splitter 
-import langchain_community.vectorstores
-from langchain_core.documents import Document
 from langchain_community.document_loaders import YoutubeLoader
-
-def get_text_splits_for_pdf_files(pdf_files, chunk_size=1000, chunk_overlap=0):
-    all_splits=[]
-    for pdf in pdf_files:
-        loader = PyPDFLoader(pdf)
-        pages_documents = loader.load_and_split() 
-        text_splitter = langchain.text_splitter.CharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
-        text_splits = text_splitter.split_documents(pages_documents)
-        for spl in text_splits:
-            all_splits.append(spl)
-    return all_splits
-
-def get_retriever_for_pdf_files(all_splits, k_to_retrieve=4, vectorstore='FAISS', distance_strategy='COSINE'): 
-    embeddings = langchain_openai.OpenAIEmbeddings()
-    if vectorstore=='FAISS':
-        db = langchain_community.vectorstores.FAISS.from_documents(all_splits, embeddings, distance_strategy=distance_strategy)
-    retriever = db.as_retriever(search_kwargs={'k': k_to_retrieve})
-    return retriever
 
 def main():
     st.title("Youtube Summarizer")
